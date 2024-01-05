@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="salesPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.cinnamonProduction.controller.salesFormController">
+
+   <children>
+      <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icon/backg2.jpg" />
+         </image></ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f0f0f0" height="506.0" layoutX="55.0" layoutY="40.0" opacity="0.45" stroke="#fffafa" strokeType="INSIDE" strokeWidth="3.0" width="817.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f2cf9a" height="414.0" layoutX="62.0" layoutY="99.0" stroke="#fffefe" strokeType="INSIDE" width="144.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f9fbfc" height="169.0" layoutX="224.0" layoutY="98.0" stroke="#fffefe" strokeType="INSIDE" width="597.0" />
+      <Label layoutX="62.0" layoutY="50.0" text="Sales Management">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+      </Label>
+      <JFXButton buttonType="RAISED" layoutX="71.0" layoutY="109.0" onAction="#btnEditProfileOnAction" prefHeight="32.0" prefWidth="125.0" style="-fx-background-color: white;" text="  edit profile">
+         <effect>
+            <Shadow />
+         </effect>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="71.0" layoutY="159.0" onAction="#btnMerchantOnAction" prefHeight="32.0" prefWidth="125.0" ripplerFill="#f8f7f7" style="-fx-background-color: white;" text=" merchant" />
+      <JFXButton buttonType="RAISED" layoutX="72.0" layoutY="269.0" onAction="#btnStockOnActon" prefHeight="31.0" prefWidth="125.0" style="-fx-background-color: white;" text="stock" />
+      <JFXButton buttonType="RAISED" layoutX="72.0" layoutY="212.0" onAction="#btnEmployeeOnAction" prefHeight="32.0" prefWidth="125.0" ripplerFill="#f8f7f7" style="-fx-background-color: white;" text="employee" />
+      <JFXButton buttonType="RAISED" layoutX="71.0" layoutY="312.0" onAction="#btnSalesOnAction" prefHeight="31.0" prefWidth="125.0" text="sales" />
+      <JFXButton buttonType="RAISED" layoutX="72.0" layoutY="360.0" onAction="#btnMachineOnAction" prefHeight="31.0" prefWidth="125.0" style="-fx-background-color: white;" text="machine" />
+      <JFXButton buttonType="RAISED" layoutX="72.0" layoutY="412.0" onAction="#btnVehicleOnACTION" prefHeight="31.0" prefWidth="125.0" style="-fx-background-color: white;" text="vehicle" />
+
+      <JFXButton buttonType="RAISED" layoutX="676.0" layoutY="492.0" onAction="#btnnextOnAction" prefHeight="24.0" prefWidth="65.0" style="-fx-background-color: #f2cf9a;" text="Next">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+
+            </Lighting>
+         </effect>
+         <cursor>
+            <Cursor fx:constant="CROSSHAIR" />
+         </cursor>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="756.0" layoutY="492.0" onAction="#btnbackOnAction" prefHeight="24.0" prefWidth="65.0" style="-fx-background-color: #f2cf9a;" text="Back">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+
+            </Lighting>
+         </effect>
+         <cursor>
+            <Cursor fx:constant="CROSSHAIR" />
+         </cursor>
+      </JFXButton>
+      <ImageView fitHeight="31.0" fitWidth="24.0" layoutX="77.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icon/prpfileiconnn.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="44.0" fitWidth="24.0" layoutX="77.0" layoutY="161.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icon/merchanticon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="24.0" layoutX="77.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icon/employeeicon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="84.0" fitWidth="24.0" layoutX="77.0" layoutY="273.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icon/stockicon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="24.0" layoutX="77.0" layoutY="316.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icon/salesicon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="77.0" layoutY="364.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icon/icons8-machine-30.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="24.0" layoutX="77.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icon/icons8-delivery-50.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="238.0" layoutY="129.0" prefHeight="16.0" prefWidth="71.0" text="SalesNo :" />
+      <TextField fx:id="txtsalesNo" layoutX="331.0" layoutY="125.0" onAction="#salesOnAction" prefHeight="24.0" prefWidth="406.0" />
+      <TextField fx:id="txtdate" layoutX="327.0" layoutY="173.0" prefHeight="24.0" prefWidth="414.0" />
+      <Label layoutX="244.0" layoutY="177.0" prefHeight="16.0" prefWidth="71.0" text="Date :" />
+      <TableView fx:id="tableSales" layoutX="224.0" layoutY="288.0" prefHeight="201.0" prefWidth="597.0">
+        <columns>
+          <TableColumn fx:id="colSalesNo" prefWidth="181.0" text="SalesNo" />
+          <TableColumn fx:id="colDate" prefWidth="411.0" text="Date" />
+            <TableColumn minWidth="0.0" prefWidth="0.0" />
+        </columns>
+      </TableView>
+      <Button layoutX="673.0" layoutY="228.0" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="24.0" prefWidth="71.0" style="-fx-background-color: B15B0C;" text="Update" textFill="#fffefe">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="572.0" layoutY="228.0" mnemonicParsing="false" onAction="#btnAddOnAction" prefHeight="24.0" prefWidth="71.0" style="-fx-background-color: B15B0C;" text="Add " textFill="#fffefe">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <JFXButton buttonType="RAISED" layoutX="72.0" layoutY="458.0" onAction="#btnDashboardOnAction" prefHeight="31.0" prefWidth="125.0" style="-fx-background-color: white;" text="DashBoard" />
+   </children>
+</AnchorPane>

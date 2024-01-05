@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="merchantReport1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1db14571-8c17-4d0c-b7e4-ff8751c40a65">
+	<property name="com.jaspersoft.studio.data.sql.tables" value="bWVyY2hhbnQgLDE1LDE1LGJkZjhiNWE3LTcyNmUtNDE5Ny1iODhlLTFkYjliOGJlMjE1ZTs="/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (2)"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT *
+FROM merchant]]>
+	</queryString>
+	<field name="merchantId" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="merchantId"/>
+		<property name="com.jaspersoft.studio.field.label" value="merchantId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="merchant"/>
+	</field>
+	<field name="merchantName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="merchantName"/>
+		<property name="com.jaspersoft.studio.field.label" value="merchantName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="merchant"/>
+	</field>
+	<field name="merchantTeleNo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="merchantTeleNo"/>
+		<property name="com.jaspersoft.studio.field.label" value="merchantTeleNo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="merchant"/>
+	</field>
+	<field name="merchantCategory" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="merchantCategory"/>
+		<property name="com.jaspersoft.studio.field.label" value="merchantCategory"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="merchant"/>
+	</field>
+	<field name="homeNo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="homeNo"/>
+		<property name="com.jaspersoft.studio.field.label" value="homeNo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="merchant"/>
+	</field>
+	<field name="street" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="street"/>
+		<property name="com.jaspersoft.studio.field.label" value="street"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="merchant"/>
+	</field>
+	<field name="town" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="town"/>
+		<property name="com.jaspersoft.studio.field.label" value="town"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="merchant"/>
+	</field>
+	<group name="merchantId">
+		<groupExpression><![CDATA[$F{merchantId}]]></groupExpression>
+	</group>
+	<group name="merchantName">
+		<groupExpression><![CDATA[$F{merchantName}]]></groupExpression>
+	</group>
+	<group name="merchantTeleNo">
+		<groupExpression><![CDATA[$F{merchantTeleNo}]]></groupExpression>
+	</group>
+	<group name="merchantCategory">
+		<groupExpression><![CDATA[$F{merchantCategory}]]></groupExpression>
+	</group>
+	<group name="homeNo">
+		<groupExpression><![CDATA[$F{homeNo}]]></groupExpression>
+	</group>
+	<group name="street">
+		<groupExpression><![CDATA[$F{street}]]></groupExpression>
+	</group>
+	<group name="town">
+		<groupExpression><![CDATA[$F{town}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="210" y="30" width="161" height="30" uuid="9601b2cb-e0ef-4f0f-ab60-de7d05c59e48"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Merchant Form]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="25" y="0" width="100" height="30" uuid="d5c69816-99b0-4d49-8738-6f0409a92fb5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="be3b3304-2c57-41d3-b307-bc095e288362"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[merchantId]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="143" y="0" width="100" height="30" uuid="0fd1f5ef-da17-4dff-9ff1-e2b6a26bc468">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b0ff1723-8a4a-4863-b322-f5f3ef4611e2"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[merchantName]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="263" y="0" width="100" height="30" uuid="55dd709a-9ee1-4b47-80bf-6954553561e9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bd106ddb-bca0-49d1-8bd1-e4f3acd45306"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[merchantTeleNo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="397" y="0" width="100" height="30" uuid="63bd563f-82df-44c4-9584-e31f34d512ba">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7ab7019a-7e39-4f75-8255-6c6ec83e4229"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[merchantCategory]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="25" y="30" width="100" height="30" uuid="4d781030-626c-4db4-a972-8d353243dfba">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="be3b3304-2c57-41d3-b307-bc095e288362"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{merchantId}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="143" y="19" width="100" height="30" uuid="aee24294-38cf-4c4b-b2ed-a3c77a21f484">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b0ff1723-8a4a-4863-b322-f5f3ef4611e2"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{merchantName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="263" y="23" width="100" height="30" uuid="fddb54f5-49eb-4362-9459-613bb705031a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bd106ddb-bca0-49d1-8bd1-e4f3acd45306"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{merchantTeleNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="397" y="21" width="100" height="30" uuid="1d94fcda-75ec-4ae8-ab13-d38dfe8a51bd">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7ab7019a-7e39-4f75-8255-6c6ec83e4229"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{merchantCategory}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

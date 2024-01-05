@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="reportPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.cinnamonProduction.controller.reportFormController">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icon/backg2.jpg" />
+         </image></ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="314.0" layoutX="47.0" layoutY="43.0" opacity="0.69" stroke="#fffafa" strokeType="INSIDE" width="239.0" />
+      <JFXButton layoutX="81.0" layoutY="119.0" onAction="#btnEmployeeReportOnAction" prefHeight="46.0" prefWidth="167.0" style="-fx-background-color: #f2cf9a;" text="employee report">
+         <font>
+            <Font size="15.0" />
+         </font></JFXButton>
+      <JFXButton layoutX="81.0" layoutY="195.0" onAction="#btnMerchantReportOnAction" prefHeight="46.0" prefWidth="167.0" style="-fx-background-color: #f2cf9a;" text="merchant report">
+         <font>
+            <Font size="15.0" />
+         </font></JFXButton>
+      <Label layoutX="81.0" layoutY="68.0" prefHeight="34.0" prefWidth="106.0" text="Report">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <JFXButton layoutX="81.0" layoutY="267.0" onAction="#btnStockReportOnAction" prefHeight="46.0" prefWidth="167.0" style="-fx-background-color: #f2cf9a;" text="stock report">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="175.0" layoutY="323.0" onAction="#btnbackOnAction" opacity="0.99" style="-fx-background-color: #80461B;" text=" &lt; Back" textFill="#f2cf9a">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXButton>
+   </children>
+</AnchorPane>

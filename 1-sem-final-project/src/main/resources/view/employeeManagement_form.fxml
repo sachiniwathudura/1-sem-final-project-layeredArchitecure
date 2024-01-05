@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.cinnamonProduction.controller.employeeManagementFormController">
+   <children>
+      <ImageView fx:id="employeePane" fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icon/backg2.jpg" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f0f0f0" height="497.0" layoutX="37.0" layoutY="46.0" opacity="0.45" stroke="#fffafa" strokeType="INSIDE" strokeWidth="3.0" width="799.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f9fbfc" height="219.0" layoutX="221.0" layoutY="108.0" stroke="#fffefe" strokeType="INSIDE" width="550.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f2cf9a" height="391.0" layoutX="68.0" layoutY="111.0" stroke="#fffefe" strokeType="INSIDE" width="144.0" />
+      <JFXButton buttonType="RAISED" layoutX="78.0" layoutY="147.0" onAction="#btnEditProfileOnAction" prefHeight="32.0" prefWidth="125.0" style="-fx-background-color: white;" text="  edit profile">
+         <effect>
+            <Shadow />
+         </effect>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="78.0" layoutY="189.0" onAction="#btnMerchantOnAction" prefHeight="32.0" prefWidth="125.0" ripplerFill="#f8f7f7" style="-fx-background-color: white;" text=" merchant" />
+      <JFXButton buttonType="RAISED" layoutX="78.0" layoutY="236.0" onAction="#btnEmployeeOnAction" prefHeight="32.0" prefWidth="125.0" text="  employee" />
+      <JFXButton buttonType="RAISED" layoutX="78.0" layoutY="285.0" onAction="#btnStockOnAction" prefHeight="31.0" prefWidth="125.0" style="-fx-background-color: white;" text="stock" />
+      <JFXButton buttonType="RAISED" layoutX="78.0" layoutY="329.0" onAction="#btnSalesOnAction" prefHeight="31.0" prefWidth="125.0" style="-fx-background-color: white;" text="sales" />
+      <JFXButton buttonType="RAISED" layoutX="78.0" layoutY="372.0" onAction="#btnMachineOnAction" prefHeight="31.0" prefWidth="125.0" style="-fx-background-color: white;" text="machine" />
+      <JFXButton buttonType="RAISED" layoutX="76.0" layoutY="412.0" onAction="#btnVehicalaOnAction" prefHeight="31.0" prefWidth="125.0" style="-fx-background-color: white;" text="vehicle" />
+      <Label layoutX="65.0" layoutY="69.0" text="Employee Management">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtId" layoutX="310.0" layoutY="136.0" onAction="#employeeOnAction" prefHeight="31.0" prefWidth="181.0" promptText="Enter id" />
+      <TextField fx:id="txtTeleNo" layoutX="596.0" layoutY="137.0" prefHeight="31.0" prefWidth="161.0" promptText="Enter TeleNo" />
+      <TextField fx:id="txtName" layoutX="310.0" layoutY="178.0" prefHeight="31.0" prefWidth="181.0" promptText="Enter name" />
+      <TextField fx:id="txtAddress" layoutX="310.0" layoutY="221.0" prefHeight="31.0" prefWidth="181.0" promptText="Enter address" />
+      <Button layoutX="303.0" layoutY="289.0" mnemonicParsing="false" onAction="#btnAddOnAction" prefHeight="24.0" prefWidth="71.0" style="-fx-background-color: B15B0C;" text="Add " textFill="#fffefe">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button layoutX="400.0" layoutY="288.0" mnemonicParsing="false" onAction="#btnupadteOnAction" prefHeight="24.0" prefWidth="71.0" style="-fx-background-color: B15B0C;" text="Update" textFill="#f8f6f6">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button layoutX="496.0" layoutY="288.0" mnemonicParsing="false" onAction="#btndeleteOnAction" prefHeight="24.0" prefWidth="71.0" style="-fx-background-color: B15B0C;" text="Delete" textFill="#fff9f9">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Label layoutX="229.0" layoutY="144.0" text="Id" />
+      <Label layoutX="509.0" layoutY="145.0" text="TeleNo" />
+      <Label layoutX="229.0" layoutY="186.0" text="Name" />
+      <Label layoutX="229.0" layoutY="229.0" text="Address" />
+      <Label layoutX="511.0" layoutY="194.0" text="Status" />
+      <ImageView fitHeight="16.0" fitWidth="22.0" layoutX="316.0" layoutY="396.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="31.0" fitWidth="24.0" layoutX="85.0" layoutY="236.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icon/employeeicon.png" />
+         </image>
+      </ImageView>
+      <TableView fx:id="tableview" editable="true" layoutX="221.0" layoutY="345.0" prefHeight="156.0" prefWidth="558.0">
+        <columns>
+          <TableColumn fx:id="colid" prefWidth="75.0" text="Id" />
+          <TableColumn fx:id="colname" prefWidth="92.0" text="Name" />
+            <TableColumn fx:id="coladdress" prefWidth="133.0" text="Address" />
+            <TableColumn fx:id="colteleno" prefWidth="130.0" text="TeleNo" />
+            <TableColumn fx:id="colstatus" prefWidth="127.0" text="Status" />
+        </columns>
+      </TableView>
+      <JFXButton buttonType="RAISED" layoutX="710.0" layoutY="72.0" onAction="#btnbackOnAction" prefHeight="24.0" prefWidth="65.0" style="-fx-background-color: #f2cf9a;" text="Back">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+            </Lighting>
+         </effect>
+         <cursor>
+            <Cursor fx:constant="CROSSHAIR" />
+         </cursor>
+      </JFXButton>
+      <ImageView fitHeight="31.0" fitWidth="24.0" layoutX="85.0" layoutY="151.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icon/prpfileiconnn.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="44.0" fitWidth="24.0" layoutX="85.0" layoutY="193.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icon/merchanticon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="84.0" fitWidth="24.0" layoutX="85.0" layoutY="288.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icon/stockicon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="24.0" layoutX="87.0" layoutY="333.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icon/salesicon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="24.0" layoutX="85.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icon/icons8-delivery-50.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="85.0" layoutY="376.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icon/icons8-machine-30.png" />
+         </image>
+      </ImageView>
+      <JFXButton layoutX="78.0" layoutY="454.0" onAction="#btnDashboardOnAction" prefHeight="32.0" prefWidth="125.0" style="-fx-background-color: ffffff;" text="dashboard" />
+      <TextField fx:id="txtStatus" layoutX="596.0" layoutY="190.0" prefHeight="31.0" prefWidth="161.0" promptText="Enter partTime/fullTime" />
+   </children>
+</AnchorPane>
