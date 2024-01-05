@@ -43,6 +43,7 @@ public class cinnamonGradesModel implements cinnamonGradesDAO {
 
         Connection connection = DbConnection.getInstance().getConnection();
         String sql = "INSERT INTO cinnamonGrade VALUES(?, ?, ?)";
+
         PreparedStatement pstm = connection.prepareStatement(sql);
 
         pstm.setString(1, dto.getCGradeId());
