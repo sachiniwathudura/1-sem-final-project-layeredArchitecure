@@ -21,8 +21,8 @@ public class BOFactory {
             switch (botypes){
                 case CINNAMONGRADES:
                     return new cinnamonGradesModel();
-               // case COMPANY:
-                  //  return new companyModel();
+                case COMPANY:
+                    return new companyModel();
                 case EMPLOYEE:
                     return new employeeManagementModel();
                 case MACHINE:
