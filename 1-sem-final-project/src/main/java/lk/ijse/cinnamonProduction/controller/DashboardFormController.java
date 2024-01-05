@@ -1,6 +1,5 @@
 package lk.ijse.cinnamonProduction.controller;
 
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,17 +14,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.cinnamonProduction.dto.companyDto;
+import lk.ijse.cinnamonProduction.dto.company;
 import lk.ijse.cinnamonProduction.model.companyModel;
 import lk.ijse.cinnamonProduction.model.employeeManagementModel;
 import lombok.SneakyThrows;
 
-import java.awt.*;
 import java.io.IOException;
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.ResourceBundle;
 
 
 public class DashboardFormController {
@@ -41,7 +37,7 @@ public class DashboardFormController {
     private Label lblToatal;
 
     @FXML
-    private TableView<companyDto> tablcompanydetails;
+    private TableView<company> tablcompanydetails;
 
     @FXML
     private AnchorPane dashboardPane;
@@ -152,14 +148,14 @@ public class DashboardFormController {
     private void viewCompanyTable() {
         var model = new companyModel();
 
-        ObservableList<companyDto> obList  = FXCollections.observableArrayList();
+        ObservableList<company> obList  = FXCollections.observableArrayList();
 
         try {
-            List<companyDto> dtoList = model.getAllCompany();
+            List<company> dtoList = model.getAllCompany();
 
-            for(companyDto dto : dtoList) {
+            for(company dto : dtoList) {
                 obList.add(
-                        new companyDto(
+                        new company(
                                 dto.getCompanyId(),
                                 dto.getCompanyName(),
                                 dto.getCompanyEmail()

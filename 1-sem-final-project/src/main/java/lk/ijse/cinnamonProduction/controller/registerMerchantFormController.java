@@ -12,20 +12,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import lk.ijse.cinnamonProduction.db.DbConnection;
-import lk.ijse.cinnamonProduction.dto.machineDto;
-import lk.ijse.cinnamonProduction.dto.registerMerchantDto;
+import lk.ijse.cinnamonProduction.dto.registerMerchant;
 import lk.ijse.cinnamonProduction.dto.tm.registerMerchantTm;
 import lk.ijse.cinnamonProduction.model.machineModel;
 import lk.ijse.cinnamonProduction.model.registerMerchantModel;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.view.JasperViewer;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -57,7 +49,7 @@ public class registerMerchantFormController {
     private TableColumn<?, ?> colcategory;
 
     @FXML
-    private TableView<registerMerchantDto> tableview;
+    private TableView<registerMerchant> tableview;
 
 
     @FXML
@@ -94,7 +86,7 @@ public class registerMerchantFormController {
             String town = txttown.getText();
             String merchantCategory = txtCategory1.getText();
 
-            var dto = new registerMerchantDto(merchantId, merchantName, merchantTeleNo, merchantCategory, homeNo, street, town);
+            var dto = new registerMerchant(merchantId, merchantName, merchantTeleNo, merchantCategory, homeNo, street, town);
 
             var model = new registerMerchantModel();
 
@@ -190,13 +182,13 @@ public class registerMerchantFormController {
     private void loadAllMerchant() {
         var model = new registerMerchantModel();
 
-        ObservableList<registerMerchantDto> oblist = FXCollections.observableArrayList();
+        ObservableList<registerMerchant> oblist = FXCollections.observableArrayList();
 
         try {
-            List<registerMerchantDto> dtoList = model.getAllMerchant();
-            for (registerMerchantDto dto : dtoList) {
+            List<registerMerchant> dtoList = model.getAllMerchant();
+            for (registerMerchant dto : dtoList) {
                 oblist.add(
-                        new registerMerchantDto(
+                        new registerMerchant(
                                 dto.getMerchantId(),
                                 dto.getMerchantName(),
                                 dto.getHomeNo(),
@@ -323,7 +315,7 @@ public class registerMerchantFormController {
 
         var model = new registerMerchantModel();
         try {
-            registerMerchantDto dto = model.searchMerchant(id);
+            registerMerchant dto = model.searchMerchant(id);
 
             if (dto != null){
                 fillFields(dto);
@@ -336,7 +328,7 @@ public class registerMerchantFormController {
         }
     }
 
-    private void fillFields(registerMerchantDto dto) {
+    private void fillFields(registerMerchant dto) {
         txtId.setText(dto.getMerchantId());
         txtname.setText(dto.getMerchantName());
         txtteleno.setText(dto.getMerchantTeleNo());

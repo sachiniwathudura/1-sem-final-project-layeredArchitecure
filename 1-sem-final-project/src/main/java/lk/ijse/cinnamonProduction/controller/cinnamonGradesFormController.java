@@ -297,9 +297,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.cinnamonProduction.dto.cinnamonGradesDto;
-import lk.ijse.cinnamonProduction.dto.tm.cinnamonGradesTm;
-import lk.ijse.cinnamonProduction.model.cinnamonGradesModel;
+import lk.ijse.cinnamonProduction.dao.custom.Impl1.cinnamonGradesModel;
+import lk.ijse.cinnamonProduction.entity.cinnamonGrades;
+import lk.ijse.cinnamonProduction.viewTDM.cinnamonGradesTm;
+import lk.ijse.cinnamonProduction.entity.cinnamonGrades;
+import lk.ijse.cinnamonProduction.viewTDM.cinnamonGradesTm;
+import lk.ijse.cinnamonProduction.dao.custom.Impl1.cinnamonGradesModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -320,7 +323,7 @@ public class cinnamonGradesFormController {
     private TableColumn<?, ?> colName;
 
     @FXML
-    private TableView<cinnamonGradesDto> tableCinnamonGrade;
+    private TableView<cinnamonGrades> tableCinnamonGrade;
 
     @FXML
     private TextField txtId1;
@@ -337,7 +340,7 @@ public class cinnamonGradesFormController {
         String cGradeName = txtName1.getText();
         double c1KgPrice = Double.parseDouble(txtPrice1.getText());
 
-        var dto = new cinnamonGradesDto(cGradeId, cGradeName, c1KgPrice);
+        var dto = new cinnamonGrades(cGradeId, cGradeName, c1KgPrice);
 
         var model = new cinnamonGradesModel();
         try {
@@ -408,14 +411,14 @@ public class cinnamonGradesFormController {
     private void loadAllCinnamonGrades(){
         var model = new cinnamonGradesModel();
 
-        ObservableList<cinnamonGradesDto> obList = FXCollections.observableArrayList();
+        ObservableList<cinnamonGrades> obList = FXCollections.observableArrayList();
 
         try {
-            List<cinnamonGradesDto> dtoList = model.getAllCinnamonGrades();
+            List<cinnamonGrades> dtoList = model.getAllCinnamonGrades();
 
-            for(cinnamonGradesDto dto : dtoList) {
+            for(cinnamonGrades dto : dtoList) {
                 obList.add(
-                        new cinnamonGradesDto(
+                        new cinnamonGrades(
                                 dto.getCGradeId(),
                                 dto.getCGradeName(),
                                 dto.getC1KgPrice()
@@ -439,7 +442,7 @@ public class cinnamonGradesFormController {
 
         var model = new cinnamonGradesModel();
         try {
-            cinnamonGradesDto dto = model.searchCgrade(id);
+            cinnamonGrades dto = model.searchCgrade(id);
 
             if (dto != null){
                 fillFields(dto);
@@ -452,7 +455,7 @@ public class cinnamonGradesFormController {
         }
         }
 
-    private void fillFields(cinnamonGradesDto dto) {
+    private void fillFields(cinnamonGrades dto) {
         txtId1.setText(dto.getCGradeId());
         txtName1.setText(dto.getCGradeName());
         txtPrice1.setText(String.valueOf(dto.getC1KgPrice()));

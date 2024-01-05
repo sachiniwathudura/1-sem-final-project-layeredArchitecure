@@ -17,10 +17,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.cinnamonProduction.dto.stockDto;
 import lk.ijse.cinnamonProduction.dto.tm.cinnamonGradesTm;
 import lk.ijse.cinnamonProduction.dto.tm.vehicalTm;
-import lk.ijse.cinnamonProduction.dto.vehicalDto;
+import lk.ijse.cinnamonProduction.dto.vehical;
 import lk.ijse.cinnamonProduction.model.cinnamonGradesModel;
 import lk.ijse.cinnamonProduction.model.stockModel;
 import lk.ijse.cinnamonProduction.model.vehicalModel;
@@ -47,7 +46,7 @@ public class vehicalFormController {
         private TableColumn<?, ?> colStatus;
 
         @FXML
-        private TableView<vehicalDto> tablevehicle;
+        private TableView<vehical> tablevehicle;
 
         @FXML
         void btnAddOnAction(ActionEvent event) {
@@ -55,7 +54,7 @@ public class vehicalFormController {
                 String vehiclestatus = txtstatus.getText();
 
 
-                var vehicalDto = new vehicalDto(vehicleNo,vehiclestatus);
+                var vehicalDto = new vehical(vehicleNo,vehiclestatus);
 
                 try{
                         boolean isSaved =  vehicalModel.saveVehical(vehicalDto);
@@ -209,7 +208,7 @@ public class vehicalFormController {
 
             var model = new vehicalModel();
             try {
-                    vehicalDto dto = model.searchVehical(id);
+                    vehical dto = model.searchVehical(id);
 
                     if (dto != null){
                             fillFields(dto);
@@ -222,7 +221,7 @@ public class vehicalFormController {
             }
     }
 
-        private void fillFields(vehicalDto dto) {
+        private void fillFields(vehical dto) {
                 txtname.setText(dto.getVehicalNo());
                 txtstatus.setText(dto.getVehicalStatus());
         }
@@ -235,13 +234,13 @@ public class vehicalFormController {
         private void loadAllVehical() {
                 var model = new vehicalModel();
 
-                ObservableList<vehicalDto> oblist = FXCollections.observableArrayList();
+                ObservableList<vehical> oblist = FXCollections.observableArrayList();
 
                 try {
-                        List<vehicalDto> dtoList = model.getAllVehical();
-                        for (vehicalDto dto : dtoList) {
+                        List<vehical> dtoList = model.getAllVehical();
+                        for (vehical dto : dtoList) {
                                 oblist.add(
-                                        new vehicalDto(
+                                        new vehical(
                                                 dto.getVehicalNo(),
                                                 dto.getVehicalStatus()
                                         )

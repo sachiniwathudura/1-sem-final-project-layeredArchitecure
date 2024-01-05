@@ -10,7 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.cinnamonProduction.dto.userLoginDto;
+import lk.ijse.cinnamonProduction.dto.userLogin;
 import lk.ijse.cinnamonProduction.model.userLoginModel;
 
 import java.io.IOException;
@@ -50,7 +50,7 @@ public class editProfileFormController {
             String userEmail = txtemail.getText();
             String password = txtppassword.getText();
 
-            var userLoginDto = new userLoginDto(userId, userName, userEmail, password);
+            var userLoginDto = new userLogin(userId, userName, userEmail, password);
 
             try {
                 boolean isSaved = userLoginModel.saveUser(userLoginDto);
@@ -112,7 +112,7 @@ public class editProfileFormController {
             String userEmail = txtemail.getText();
             String password = txtppassword.getText();
 
-            boolean isUpdated = userLoginModel.updateUser(new userLoginDto(userId,userName,userEmail,password));
+            boolean isUpdated = userLoginModel.updateUser(new userLogin(userId,userName,userEmail,password));
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "user updated").show();
             }

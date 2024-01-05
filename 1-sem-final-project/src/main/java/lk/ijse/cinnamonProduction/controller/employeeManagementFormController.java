@@ -13,20 +13,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.cinnamonProduction.db.DbConnection;
-import lk.ijse.cinnamonProduction.dto.cinnamonGradesDto;
-import lk.ijse.cinnamonProduction.dto.employeeManagementDTo;
+import lk.ijse.cinnamonProduction.dto.employee;
 import lk.ijse.cinnamonProduction.model.cinnamonGradesModel;
 import lk.ijse.cinnamonProduction.model.employeeManagementModel;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.view.JasperViewer;
 
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -59,7 +51,7 @@ public class employeeManagementFormController {
     private ImageView employeePane;
 
     @FXML
-    private TableView<employeeManagementDTo> tableview;
+    private TableView<employee> tableview;
 
     @FXML
     private TextField txtAddress;
@@ -84,7 +76,7 @@ public class employeeManagementFormController {
             String empStatus = (String)txtStatus.getText();
 
 
-            var dto = new employeeManagementDTo(empId, empName, empAddress, empTeleNo, empStatus);
+            var dto = new employee(empId, empName, empAddress, empTeleNo, empStatus);
 
             var model = new employeeManagementModel();
             try {
@@ -165,7 +157,7 @@ public class employeeManagementFormController {
         String empAddress = txtAddress.getText();
         String empTeleNo = txtTeleNo.getText();
         String empStatus = txtStatus.getAccessibleText();
-        var dto =new employeeManagementDTo(empId,empName,empAddress,empTeleNo,empStatus);
+        var dto =new employee(empId,empName,empAddress,empTeleNo,empStatus);
         var model=new employeeManagementModel();
 
         try {
@@ -194,14 +186,14 @@ public class employeeManagementFormController {
     private void loadAllEmployee() {
         var model = new employeeManagementModel();
 
-        ObservableList<employeeManagementDTo> obList  = FXCollections.observableArrayList();
+        ObservableList<employee> obList  = FXCollections.observableArrayList();
 
             try {
-                 List<employeeManagementDTo> dtoList = model.getAllEmployee();
+                 List<employee> dtoList = model.getAllEmployee();
 
-                    for(employeeManagementDTo dto : dtoList) {
+                    for(employee dto : dtoList) {
                         obList.add(
-                                new employeeManagementDTo(
+                                new employee(
                                         dto.getEmpId(),
                                         dto.getEmpName(),
                                         dto.getEmpAddress(),
@@ -225,7 +217,7 @@ public class employeeManagementFormController {
         String empAddress = txtAddress.getText();
         String empTeleNo = txtTeleNo.getText();
         String empStatus = txtStatus.getAccessibleText();
-        var dto =new employeeManagementDTo(empId,empName,empAddress,empTeleNo,empStatus);
+        var dto =new employee(empId,empName,empAddress,empTeleNo,empStatus);
         var model=new employeeManagementModel();
 
         try {
@@ -365,7 +357,7 @@ public class employeeManagementFormController {
 
         var model = new employeeManagementModel();
         try {
-            employeeManagementDTo dto = model.searchEmployee(id);
+            employee dto = model.searchEmployee(id);
 
             if (dto != null){
                 fillFields(dto);
@@ -378,7 +370,7 @@ public class employeeManagementFormController {
         }
     }
 
-    private void fillFields(employeeManagementDTo dto) {
+    private void fillFields(employee dto) {
         txtId.setText(dto.getEmpId());
         txtName.setText(dto.getEmpName());
         txtAddress.setText(dto.getEmpAddress());

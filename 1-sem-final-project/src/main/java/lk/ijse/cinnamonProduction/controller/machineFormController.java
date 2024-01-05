@@ -15,8 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.cinnamonProduction.dto.employeeManagementDTo;
-import lk.ijse.cinnamonProduction.dto.machineDto;
+import lk.ijse.cinnamonProduction.dto.machine;
 import lk.ijse.cinnamonProduction.dto.tm.machineTm;
 import lk.ijse.cinnamonProduction.model.employeeManagementModel;
 import lk.ijse.cinnamonProduction.model.machineModel;
@@ -51,7 +50,7 @@ public class machineFormController {
 
 
         @FXML
-        private TableView<machineDto> tableMachine;
+        private TableView<machine> tableMachine;
 
         @FXML
         void btnAddOnAction(ActionEvent event) {
@@ -61,7 +60,7 @@ public class machineFormController {
                         String machineName = txtName.getText();
                         String machineStatus = txtStatus.getText();
 
-                        var dto = new machineDto(machineId, machineName, machineStatus);
+                        var dto = new machine(machineId, machineName, machineStatus);
 
                         var model = new machineModel();
                         try {
@@ -155,13 +154,13 @@ public class machineFormController {
         private void loadAllMachine() {
                 var model = new machineModel();
 
-                ObservableList<machineDto>oblist = FXCollections.observableArrayList();
+                ObservableList<machine>oblist = FXCollections.observableArrayList();
 
                 try {
-                        List<machineDto> dtoList = model.getAllMachine();
-                        for (machineDto dto : dtoList) {
+                        List<machine> dtoList = model.getAllMachine();
+                        for (machine dto : dtoList) {
                                 oblist.add(
-                                        new machineDto(
+                                        new machine(
                                                 dto.getMachineId(),
                                                 dto.getMachineName(),
                                                 dto.getMachineStatus()
@@ -280,7 +279,7 @@ public class machineFormController {
 
                 var model = new machineModel();
                 try {
-                        machineDto dto = model.searchMachine(id);
+                        machine dto = model.searchMachine(id);
 
                         if (dto != null){
                                 fillFields(dto);
@@ -293,7 +292,7 @@ public class machineFormController {
                 }
         }
 
-        private void fillFields(machineDto dto) {
+        private void fillFields(machine dto) {
                 txtId.setText(dto.getMachineId());
                 txtName.setText(dto.getMachineName());
                 txtStatus.setText(dto.getMachineStatus());

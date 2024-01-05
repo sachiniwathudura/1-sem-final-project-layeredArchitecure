@@ -14,7 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.cinnamonProduction.dto.salesDto;
+import lk.ijse.cinnamonProduction.dto.sales;
 import lk.ijse.cinnamonProduction.dto.tm.salesTm;
 import lk.ijse.cinnamonProduction.model.salesModel;
 
@@ -39,7 +39,7 @@ public class salesFormController {
     private TableColumn<?, ?> colSalesNo;
 
     @FXML
-    private TableView<salesDto> tableSales;
+    private TableView<sales> tableSales;
 
     @FXML
     void btnEditProfileOnAction(ActionEvent event) throws IOException {
@@ -145,13 +145,13 @@ public class salesFormController {
     private void loadAllSales() {
         var model = new salesModel();
 
-        ObservableList<salesDto> oblist = FXCollections.observableArrayList();
+        ObservableList<sales> oblist = FXCollections.observableArrayList();
 
         try {
-            List<salesDto> dtoList = model.getAllSales();
-            for (salesDto dto : dtoList) {
+            List<sales> dtoList = model.getAllSales();
+            for (sales dto : dtoList) {
                 oblist.add(
-                        new salesDto(
+                        new sales(
                                 dto.getSalesNo(),
                                 dto.getDate()
                         )
@@ -173,7 +173,7 @@ public class salesFormController {
                    String date = txtdate.getText();
 
 
-                    salesDto salesDto = new salesDto(salesNo, date);
+                    sales salesDto = new sales(salesNo, date);
 
                     boolean isSaved = salesModel.saveSales(salesDto);
                     if (isSaved) {
@@ -264,7 +264,7 @@ public class salesFormController {
 
         var model = new salesModel();
         try {
-            salesDto dto = model.searchSales(id);
+            sales dto = model.searchSales(id);
 
             if (dto != null){
                 fillFields(dto);
@@ -277,7 +277,7 @@ public class salesFormController {
         }
     }
 
-    private void fillFields(salesDto dto) {
+    private void fillFields(sales dto) {
         txtsalesNo.setText(dto.getSalesNo());
         txtdate.setText(String.valueOf(dto.getDate()));
     }

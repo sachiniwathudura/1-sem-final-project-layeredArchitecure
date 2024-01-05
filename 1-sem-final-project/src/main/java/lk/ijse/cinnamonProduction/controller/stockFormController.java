@@ -15,7 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.cinnamonProduction.dto.stockDto;
+import lk.ijse.cinnamonProduction.dto.stock;
 import lk.ijse.cinnamonProduction.dto.tm.stockTm;
 import lk.ijse.cinnamonProduction.model.stockModel;
 
@@ -44,7 +44,7 @@ public class stockFormController {
         private AnchorPane stockPane;
 
         @FXML
-        private TableView<stockDto> tablestock;
+        private TableView<stock> tablestock;
 
 
         @FXML
@@ -189,13 +189,13 @@ public class stockFormController {
         private void loadAllSales() {
                 var model = new stockModel();
 
-                ObservableList<stockDto> oblist = FXCollections.observableArrayList();
+                ObservableList<stock> oblist = FXCollections.observableArrayList();
 
                 try {
-                        List<stockDto> dtoList = model.getAllStock();
-                        for (stockDto dto : dtoList) {
+                        List<stock> dtoList = model.getAllStock();
+                        for (stock dto : dtoList) {
                                 oblist.add(
-                                        new stockDto(
+                                        new stock(
                                                dto.getItemId(),
                                                 dto.getItemName(),
                                                 dto.getItemQty(),
@@ -307,7 +307,7 @@ public class stockFormController {
 
             var model = new stockModel();
             try {
-                    stockDto dto = model.searchStock(id);
+                    stock dto = model.searchStock(id);
 
                     if (dto != null){
                             fillFields(dto);
@@ -320,7 +320,7 @@ public class stockFormController {
             }
     }
 
-        private void fillFields(stockDto dto) {
+        private void fillFields(stock dto) {
                 txtId.setText(dto.getItemId());
                 txtName.setText(dto.getItemName());
                 txtQty.setText(valueOf(dto.getItemQty()));

@@ -13,11 +13,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.cinnamonProduction.dto.companyDto;
+import lk.ijse.cinnamonProduction.dto.company;
 import lk.ijse.cinnamonProduction.dto.tm.companyTm;
 import lk.ijse.cinnamonProduction.model.companyModel;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -38,7 +37,7 @@ public class companyFormController {
         private AnchorPane companyPane;
 
         @FXML
-        private TableView<companyDto> tableCompany;
+        private TableView<company> tableCompany;
 
         @FXML
         private TextField txtEmail;
@@ -76,14 +75,14 @@ public class companyFormController {
         private void loadAllCompany(){
                 var model = new companyModel();
 
-                ObservableList<companyDto> obList  = FXCollections.observableArrayList();
+                ObservableList<company> obList  = FXCollections.observableArrayList();
 
                         try {
-                                List<companyDto> dtoList = model.getAllCompany();
+                                List<company> dtoList = model.getAllCompany();
 
-                                for(companyDto dto : dtoList) {
+                                for(company dto : dtoList) {
                                         obList.add(
-                                                new companyDto(
+                                                new company(
                                                         dto.getCompanyId(),
                                                         dto.getCompanyName(),
                                                         dto.getCompanyEmail()
@@ -146,7 +145,7 @@ public class companyFormController {
 
                         System.out.println(txtName.getText());
 
-                        var dto = new companyDto(companyId, companyName, companyEmail);
+                        var dto = new company(companyId, companyName, companyEmail);
 
                        var model = new companyModel();
                        try {
