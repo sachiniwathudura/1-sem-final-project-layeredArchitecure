@@ -12,10 +12,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import lk.ijse.cinnamonProduction.dto.registerMerchant;
-import lk.ijse.cinnamonProduction.dto.tm.registerMerchantTm;
-import lk.ijse.cinnamonProduction.model.machineModel;
-import lk.ijse.cinnamonProduction.model.registerMerchantModel;
+import lk.ijse.cinnamonProduction.bo.custom.Impl1.merchantBOImpl;
+import lk.ijse.cinnamonProduction.bo.custom.merchantBO;
+
+import lk.ijse.cinnamonProduction.dto.registerMerchantDto;
+
+import lk.ijse.cinnamonProduction.entity.registerMerchant;
+
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -49,7 +52,7 @@ public class registerMerchantFormController {
     private TableColumn<?, ?> colcategory;
 
     @FXML
-    private TableView<registerMerchant> tableview;
+    private TableView<registerMerchantDto> tableview;
 
 
     @FXML
@@ -73,6 +76,8 @@ public class registerMerchantFormController {
     @FXML
     private TextField txttown;
 
+   merchantBO MerchantBO = new merchantBOImpl();
+
 
     @FXML
     void btnAddOnAction(ActionEvent event) {
@@ -86,16 +91,16 @@ public class registerMerchantFormController {
             String town = txttown.getText();
             String merchantCategory = txtCategory1.getText();
 
-            var dto = new registerMerchant(merchantId, merchantName, merchantTeleNo, merchantCategory, homeNo, street, town);
+            var dto = new registerMerchantDto(merchantId, merchantName, merchantTeleNo, merchantCategory, homeNo, street, town);
 
-            var model = new registerMerchantModel();
+          //  var model = new registerMerchantModel();
 
             try {
-                boolean isSaved = model.saveMerchant(dto);
+                boolean isSaved = MerchantBO.saveMerchant(dto);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, "merchant saved!").show();
                 }
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             }
         }else{
@@ -147,19 +152,19 @@ public class registerMerchantFormController {
         String merchantId = txtId.getText();
 
         try {
-            boolean isDeleted = registerMerchantModel.deleteMerchant(merchantId);
+            boolean isDeleted = MerchantBO.deleteMerchant(merchantId);
 
             if(isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "merchant deleted!").show();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
 
     }
 
     @FXML
-    void btnupadteOnAction(ActionEvent event) throws SQLException {
+    void btnupadteOnAction(ActionEvent event) {
         String merchantId = txtId.getText();
         String merchantName = txtname.getText();
         String homeNo = txthomeno.getText();
@@ -168,7 +173,14 @@ public class registerMerchantFormController {
         String merchantTeleNo = txtteleno.getText();
         String merchantCategory = txtCategory1.getText();
 
-        boolean isUpdated = registerMerchantModel.updateMerchant( new registerMerchantTm(merchantId, merchantName, merchantTeleNo, merchantCategory, homeNo, street, town));
+        boolean isUpdated = false;
+        try {
+            isUpdated = MerchantBO.updateMerchant( new registerMerchantDto(merchantId, merchantName, merchantTeleNo, merchantCategory, homeNo, street, town));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         if (isUpdated) {
             new Alert(Alert.AlertType.CONFIRMATION, "merchant updated").show();
         }
@@ -180,15 +192,15 @@ public class registerMerchantFormController {
     }
 
     private void loadAllMerchant() {
-        var model = new registerMerchantModel();
+       // var model = new registerMerchantModel();
 
-        ObservableList<registerMerchant> oblist = FXCollections.observableArrayList();
+        ObservableList<registerMerchantDto> oblist = FXCollections.observableArrayList();
 
         try {
-            List<registerMerchant> dtoList = model.getAllMerchant();
-            for (registerMerchant dto : dtoList) {
+            List<registerMerchantDto> dtoList = MerchantBO.getAllMerchant();
+            for (registerMerchantDto dto : dtoList) {
                 oblist.add(
-                        new registerMerchant(
+                        new registerMerchantDto(
                                 dto.getMerchantId(),
                                 dto.getMerchantName(),
                                 dto.getHomeNo(),
@@ -200,7 +212,7 @@ public class registerMerchantFormController {
                 );
             }
             tableview.setItems(oblist);
-        }catch (SQLException e) {
+        }catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -313,9 +325,9 @@ public class registerMerchantFormController {
 
         String id = txtId.getText();
 
-        var model = new registerMerchantModel();
+        //var model = new registerMerchantModel();
         try {
-            registerMerchant dto = model.searchMerchant(id);
+            registerMerchantDto dto = MerchantBO.searchMerchant(id);
 
             if (dto != null){
                 fillFields(dto);
@@ -323,12 +335,12 @@ public class registerMerchantFormController {
                 new Alert(Alert.AlertType.INFORMATION, "merchant not found").show();
             }
 
-        } catch (SQLException e){
+        } catch (SQLException | ClassNotFoundException e){
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 
-    private void fillFields(registerMerchant dto) {
+    private void fillFields(registerMerchantDto dto) {
         txtId.setText(dto.getMerchantId());
         txtname.setText(dto.getMerchantName());
         txtteleno.setText(dto.getMerchantTeleNo());
