@@ -11,8 +11,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.cinnamonProduction.dto.tm.forgetPasswordTm;
-import lk.ijse.cinnamonProduction.model.forgetPasswordModel;
+import lk.ijse.cinnamonProduction.dao.custom.Impl1.forgetPasswordDAOImpl;
+
+
+import lk.ijse.cinnamonProduction.viewTDM.forgetPasswordTm;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -44,8 +46,8 @@ public class frogetPasswordFormController {
         String EOTP=txtOTP.getText();
 
 
-        var tm=new forgetPasswordTm(Email,pw,cpw,EOTP);
-        var model=new forgetPasswordModel();
+      var tm=new forgetPasswordTm(Email,pw,cpw,EOTP);
+        var model=new forgetPasswordDAOImpl();
 
         try{
 
@@ -99,7 +101,7 @@ public class frogetPasswordFormController {
     void btnsendOTPOnAction(ActionEvent event) {
 
         String OTP = txtOTP.getText();
-        var model = new forgetPasswordModel();
+        var model = new forgetPasswordDAOImpl();
         try {
             if (!OTP.isEmpty()) {
                 new Alert(Alert.AlertType.CONFIRMATION, "send OTP\n your OTP is : " + OTP).show();

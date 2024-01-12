@@ -4,7 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
-public class forgetPasswordModel {
+public class forgetPasswordDAOImpl {
 
     @FXML
     private TextField txtEmail;
