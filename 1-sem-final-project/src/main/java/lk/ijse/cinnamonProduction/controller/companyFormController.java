@@ -13,9 +13,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.cinnamonProduction.dto.company;
-import lk.ijse.cinnamonProduction.dto.tm.companyTm;
-import lk.ijse.cinnamonProduction.model.companyModel;
+import lk.ijse.cinnamonProduction.bo.custom.Impl1.companyBOImpl;
+import lk.ijse.cinnamonProduction.bo.custom.companyBO;
+
+import lk.ijse.cinnamonProduction.dto.companyDto;
+
+import lk.ijse.cinnamonProduction.entity.company;
+
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -37,14 +41,14 @@ public class companyFormController {
         private AnchorPane companyPane;
 
         @FXML
-        private TableView<company> tableCompany;
+        private TableView<companyDto> tableCompany;
 
         @FXML
         private TextField txtEmail;
       @FXML
         private TextField txtId;
 
-
+            companyBO CompanyBO = new companyBOImpl();
 
         private void clearFields() {
                 txtId.setText("");
@@ -73,16 +77,16 @@ public class companyFormController {
 
         }*/
         private void loadAllCompany(){
-                var model = new companyModel();
+               // var model = new companyModel();
 
-                ObservableList<company> obList  = FXCollections.observableArrayList();
+                ObservableList<companyDto> obList  = FXCollections.observableArrayList();
 
                         try {
-                                List<company> dtoList = model.getAllCompany();
+                                List<companyDto> dtoList = CompanyBO.getAllCompany();
 
-                                for(company dto : dtoList) {
+                                for(companyDto dto : dtoList) {
                                         obList.add(
-                                                new company(
+                                                new companyDto(
                                                         dto.getCompanyId(),
                                                         dto.getCompanyName(),
                                                         dto.getCompanyEmail()
@@ -91,7 +95,7 @@ public class companyFormController {
                                         );
                                 }
                                 tableCompany.setItems(obList);
-                        } catch (SQLException e) {
+                        } catch (SQLException | ClassNotFoundException e) {
                                 throw new RuntimeException(e);
                         }
                 }
@@ -102,10 +106,10 @@ public class companyFormController {
                 String companyId = txtId.getText();
                 String companyName = txtName.getText();
                 String companyEmail = txtEmail.getText();
-                 var model=new companyModel();
-                 var Tm=new companyTm(companyId,companyName,companyEmail);
+               //  var model=new companyModel();
+                 var Tm=new companyDto(companyId,companyName,companyEmail);
                 try {
-                        boolean isUpdated = model.updateCompany(Tm);
+                        boolean isUpdated = CompanyBO.updateCompany(Tm);
                         if (isUpdated) {
                                 new Alert(Alert.AlertType.CONFIRMATION, "update company").showAndWait();
                                 Parent anchorPane = FXMLLoader.load(this.getClass().getResource("/view/company_form.fxml"));
@@ -116,22 +120,22 @@ public class companyFormController {
                                 stage.centerOnScreen();
 
                         }
-                } catch (SQLException | IOException e) {
+                } catch (SQLException | IOException | ClassNotFoundException e) {
                         new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
                 }
         }
 
         public void btnDeleteOnAction(javafx.event.ActionEvent actionEvent) {
                 String companyId = txtId.getText();
-                var model=new companyModel();
+             //   var model=new companyModel();
 
                 try {
-                        boolean isDeleted = model.deleteCompany(companyId);
+                        boolean isDeleted = CompanyBO.deleteCompany(companyId);
 
                         if (isDeleted) {
                                 new Alert(Alert.AlertType.CONFIRMATION, "company deleted!").show();
                         }
-                } catch (SQLException e) {
+                } catch (SQLException | ClassNotFoundException e) {
                         new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
                 }
         }
@@ -145,11 +149,11 @@ public class companyFormController {
 
                         System.out.println(txtName.getText());
 
-                        var dto = new company(companyId, companyName, companyEmail);
+                        var dto = new companyDto(companyId, companyName, companyEmail);
 
-                       var model = new companyModel();
+                      // var model = new companyModel();
                        try {
-                                boolean isSaved = model.saveCompany(dto);
+                                boolean isSaved = CompanyBO.saveCompany(dto);
                                if (isSaved) {
                                        new Alert(Alert.AlertType.CONFIRMATION, "company saved!").showAndWait();
                                         Parent anchorPane = FXMLLoader.load(this.getClass().getResource("/view/company_form.fxml"));
@@ -160,7 +164,7 @@ public class companyFormController {
                                       stage.centerOnScreen();
                                         clearFields();
                                }
-                       } catch (SQLException | IOException e) {
+                       } catch (SQLException | IOException | ClassNotFoundException e) {
                                new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
                        }
                 }else {
