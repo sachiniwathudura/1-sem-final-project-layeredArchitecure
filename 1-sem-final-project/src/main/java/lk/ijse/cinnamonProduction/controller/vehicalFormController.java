@@ -17,12 +17,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.cinnamonProduction.dto.tm.cinnamonGradesTm;
-import lk.ijse.cinnamonProduction.dto.tm.vehicalTm;
-import lk.ijse.cinnamonProduction.dto.vehical;
-import lk.ijse.cinnamonProduction.model.cinnamonGradesModel;
-import lk.ijse.cinnamonProduction.model.stockModel;
-import lk.ijse.cinnamonProduction.model.vehicalModel;
+import lk.ijse.cinnamonProduction.bo.custom.Impl1.vehicalBOImpl;
+import lk.ijse.cinnamonProduction.bo.custom.vehicalBO;
+
+import lk.ijse.cinnamonProduction.dto.vehicalDto;
+import lk.ijse.cinnamonProduction.entity.vehical;
+
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -46,7 +46,9 @@ public class vehicalFormController {
         private TableColumn<?, ?> colStatus;
 
         @FXML
-        private TableView<vehical> tablevehicle;
+        private TableView<vehicalDto> tablevehicle;
+
+        vehicalBO VehicalBO = new vehicalBOImpl();
 
         @FXML
         void btnAddOnAction(ActionEvent event) {
@@ -54,14 +56,14 @@ public class vehicalFormController {
                 String vehiclestatus = txtstatus.getText();
 
 
-                var vehicalDto = new vehical(vehicleNo,vehiclestatus);
+                var vehicalDto = new vehicalDto(vehicleNo,vehiclestatus);
 
                 try{
-                        boolean isSaved =  vehicalModel.saveVehical(vehicalDto);
+                        boolean isSaved =  VehicalBO.saveVehical(vehicalDto);
                         if (isSaved){
                                 new Alert(Alert.AlertType.CONFIRMATION, " vehical saved").show();
                         }
-                }catch ( SQLException e){
+                }catch (SQLException | ClassNotFoundException e){
                         new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
                 }
 
@@ -72,12 +74,12 @@ public class vehicalFormController {
                 String vehicalNo = txtname.getText();
 
                 try {
-                        boolean isDeleted = vehicalModel.deleteVehicl(vehicalNo);
+                        boolean isDeleted = VehicalBO.deleteVehical(vehicalNo);
 
                         if(isDeleted) {
                                 new Alert(Alert.AlertType.CONFIRMATION, "vehical deleted!").show();
                         }
-                } catch (SQLException e) {
+                } catch (SQLException | ClassNotFoundException e) {
                         new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
                 }
         }
@@ -88,15 +90,15 @@ public class vehicalFormController {
                 String vehiclestatus = txtstatus.getText();
 
 
-                var Tm=new vehicalTm(vehicleNo,vehiclestatus);
-                var model=new vehicalModel();
+                var Tm=new vehicalDto(vehicleNo,vehiclestatus);
+               // var model=new vehicalModel();
 
                 try {
-                        boolean isUpdated = model.updateVehical(Tm);
+                        boolean isUpdated = VehicalBO.updateVehical(Tm);
                         if (isUpdated) {
                                 new Alert(Alert.AlertType.CONFIRMATION, "upadte vehical").show();
                         }
-                } catch (SQLException e) {
+                } catch (SQLException | ClassNotFoundException e) {
                         new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
                 }
 
@@ -206,9 +208,9 @@ public class vehicalFormController {
     public void vehicalOnAction(ActionEvent actionEvent) {
             String id = txtname.getText();
 
-            var model = new vehicalModel();
+        //    var model = new vehicalModel();
             try {
-                    vehical dto = model.searchVehical(id);
+                    vehicalDto dto = VehicalBO.searchVehical(id);
 
                     if (dto != null){
                             fillFields(dto);
@@ -216,12 +218,12 @@ public class vehicalFormController {
                             new Alert(Alert.AlertType.INFORMATION, "vehical not found").show();
                     }
 
-            } catch (SQLException e){
+            } catch (SQLException | ClassNotFoundException e){
                     new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             }
     }
 
-        private void fillFields(vehical dto) {
+        private void fillFields(vehicalDto dto) {
                 txtname.setText(dto.getVehicalNo());
                 txtstatus.setText(dto.getVehicalStatus());
         }
@@ -232,22 +234,22 @@ public class vehicalFormController {
         }
 
         private void loadAllVehical() {
-                var model = new vehicalModel();
+             //   var model = new vehicalModel();
 
-                ObservableList<vehical> oblist = FXCollections.observableArrayList();
+                ObservableList<vehicalDto> oblist = FXCollections.observableArrayList();
 
                 try {
-                        List<vehical> dtoList = model.getAllVehical();
-                        for (vehical dto : dtoList) {
+                        List<vehicalDto> dtoList = VehicalBO.getAllVehical();
+                        for (vehicalDto dto : dtoList) {
                                 oblist.add(
-                                        new vehical(
+                                        new vehicalDto(
                                                 dto.getVehicalNo(),
                                                 dto.getVehicalStatus()
                                         )
                                 );
                         }
                         tablevehicle.setItems(oblist);
-                }catch (SQLException e) {
+                }catch (SQLException | ClassNotFoundException e) {
                         throw new RuntimeException(e);
                 }
         }
