@@ -15,9 +15,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.cinnamonProduction.dto.stock;
-import lk.ijse.cinnamonProduction.dto.tm.stockTm;
-import lk.ijse.cinnamonProduction.model.stockModel;
+import lk.ijse.cinnamonProduction.bo.custom.Impl1.stockBOImpl;
+import lk.ijse.cinnamonProduction.bo.custom.stockBO;
+import lk.ijse.cinnamonProduction.dto.stockDto;
+
+import lk.ijse.cinnamonProduction.entity.stock;
+
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -44,7 +47,7 @@ public class stockFormController {
         private AnchorPane stockPane;
 
         @FXML
-        private TableView<stock> tablestock;
+        private TableView<stockDto> tablestock;
 
 
         @FXML
@@ -62,6 +65,8 @@ public class stockFormController {
         @FXML
         private TextField txtQty;
 
+        stockBO SatockBO = new stockBOImpl();
+
         @FXML
         void btnAddOnAction(ActionEvent event) {
                 boolean isvalid = validateStock();
@@ -72,15 +77,15 @@ public class stockFormController {
                         double itemQty = Double.parseDouble(txtQty.getText());
                         String itemCategory = txtCategory.getText();
 
-                        stockTm stockDto = new stockTm(itemId, itemName, itemQty, itemCategory);
+                        stockDto stockDto = new stockDto(itemId, itemName, itemQty, itemCategory);
 
                         try {
-                                boolean isSaved = stockModel.saveItem(stockDto);
+                                boolean isSaved = SatockBO.saveStock(stockDto);
                                 if (isSaved) {
                                         new Alert(Alert.AlertType.CONFIRMATION, "item saved!").show();
                                         //clearFields();
                                 }
-                        } catch (SQLException e) {
+                        } catch (SQLException | ClassNotFoundException e) {
                                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
                         }
                 }else {
@@ -111,12 +116,12 @@ public class stockFormController {
                 String itemId = txtId.getText();
 
                 try {
-                        boolean isDeleted = stockModel.deleteItem(itemId);
+                        boolean isDeleted = SatockBO.deleteStock(itemId);
 
                         if(isDeleted) {
                                 new Alert(Alert.AlertType.CONFIRMATION, "item deleted!").show();
                         }
-                } catch (SQLException e) {
+                } catch (SQLException | ClassNotFoundException e) {
                         new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
                 }
 
@@ -130,7 +135,12 @@ public class stockFormController {
                 double itemQty = Double.parseDouble(txtQty.getText());
                 String itemCategory = txtCategory.getText();
 
-                boolean isUpdated = stockModel.updateItem(new stockTm(itemId, itemName,itemQty,itemCategory));
+                boolean isUpdated = false;
+                try {
+                        isUpdated = SatockBO.updateStock(new stockDto(itemId, itemName,itemQty,itemCategory));
+                } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                }
                 if (isUpdated) {
                         new Alert(Alert.AlertType.CONFIRMATION, "stock updated").show();
                 }
@@ -140,7 +150,7 @@ public class stockFormController {
 
         @FXML
         void btnbackOnAction(ActionEvent event) throws IOException {
-                Parent anchorPane = FXMLLoader.load(getClass().getResource("/view/dashboard_form.fxml"));
+                Parent anchorPane = FXMLLoader.load(this.getClass().getResource("/view/dashboard_form.fxml"));
                 Stage stage = (Stage) stockPane.getScene().getWindow();
 
                 stage.setScene(new Scene(anchorPane));
@@ -187,15 +197,15 @@ public class stockFormController {
         }
 
         private void loadAllSales() {
-                var model = new stockModel();
+               // var model = new stockModel();
 
-                ObservableList<stock> oblist = FXCollections.observableArrayList();
+                ObservableList<stockDto> oblist = FXCollections.observableArrayList();
 
                 try {
-                        List<stock> dtoList = model.getAllStock();
-                        for (stock dto : dtoList) {
+                        List<stockDto> dtoList = SatockBO.getAllStock();
+                        for (stockDto dto : dtoList) {
                                 oblist.add(
-                                        new stock(
+                                        new stockDto(
                                                dto.getItemId(),
                                                 dto.getItemName(),
                                                 dto.getItemQty(),
@@ -205,7 +215,7 @@ public class stockFormController {
                                 );
                         }
                         tablestock.setItems(oblist);
-                }catch (SQLException e) {
+                }catch (SQLException | ClassNotFoundException e) {
                         throw new RuntimeException(e);
                 }
 
@@ -305,9 +315,9 @@ public class stockFormController {
         public void stockOnAction(ActionEvent actionEvent) {
             String id = txtId.getText();
 
-            var model = new stockModel();
+            //var model = new stockModel();
             try {
-                    stock dto = model.searchStock(id);
+                    stockDto dto = SatockBO.searchStock(id);
 
                     if (dto != null){
                             fillFields(dto);
@@ -315,12 +325,12 @@ public class stockFormController {
                             new Alert(Alert.AlertType.INFORMATION, "stock not found").show();
                     }
 
-            } catch (SQLException e){
+            } catch (SQLException | ClassNotFoundException e){
                     new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             }
     }
 
-        private void fillFields(stock dto) {
+        private void fillFields(stockDto dto) {
                 txtId.setText(dto.getItemId());
                 txtName.setText(dto.getItemName());
                 txtQty.setText(valueOf(dto.getItemQty()));
