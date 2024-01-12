@@ -14,9 +14,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.cinnamonProduction.dto.sales;
-import lk.ijse.cinnamonProduction.dto.tm.salesTm;
-import lk.ijse.cinnamonProduction.model.salesModel;
+import lk.ijse.cinnamonProduction.bo.custom.Impl1.salesBOImpl;
+import lk.ijse.cinnamonProduction.bo.custom.salesBO;
+
+import lk.ijse.cinnamonProduction.dto.salesDto;
+
+import lk.ijse.cinnamonProduction.entity.sales;
+
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -39,7 +43,9 @@ public class salesFormController {
     private TableColumn<?, ?> colSalesNo;
 
     @FXML
-    private TableView<sales> tableSales;
+    private TableView<salesDto> tableSales;
+
+    salesBO SalesBO = new salesBOImpl();
 
     @FXML
     void btnEditProfileOnAction(ActionEvent event) throws IOException {
@@ -143,22 +149,22 @@ public class salesFormController {
     }
 
     private void loadAllSales() {
-        var model = new salesModel();
+        //var model = new salesModel();
 
-        ObservableList<sales> oblist = FXCollections.observableArrayList();
+        ObservableList<salesDto> oblist = FXCollections.observableArrayList();
 
         try {
-            List<sales> dtoList = model.getAllSales();
-            for (sales dto : dtoList) {
+            List<salesDto> dtoList = SalesBO.getAllSales();
+            for (salesDto dto : dtoList) {
                 oblist.add(
-                        new sales(
+                        new salesDto(
                                 dto.getSalesNo(),
                                 dto.getDate()
                         )
                 );
             }
             tableSales.setItems(oblist);
-        }catch (SQLException e) {
+        }catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -173,10 +179,15 @@ public class salesFormController {
                    String date = txtdate.getText();
 
 
-                    sales salesDto = new sales(salesNo, date);
+                    salesDto salesDto = new salesDto(salesNo, date);
 
-                    boolean isSaved = salesModel.saveSales(salesDto);
-                    if (isSaved) {
+        boolean isSaved = false;
+        try {
+            isSaved = SalesBO.saveSales(salesDto);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (isSaved) {
                         new Alert(Alert.AlertType.CONFIRMATION, "sales saved!").show();
                         //clearFields();
                     }
@@ -211,12 +222,12 @@ public class salesFormController {
                 String date = txtdate.getText();
 
                 try{
-                boolean isUpdated = salesModel.updateSales(new salesTm(salesNo, date));
+                boolean isUpdated = SalesBO.updateSales(new salesDto(salesNo, date));
                 if(isUpdated) {
                     new Alert(Alert.AlertType.CONFIRMATION, "sales updated").show();
 
                 }
-                } catch (SQLException e){
+                } catch (SQLException | ClassNotFoundException e){
                     new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
                 }
             }
@@ -262,9 +273,9 @@ public class salesFormController {
     public void salesOnAction(ActionEvent actionEvent) {
         String id = txtsalesNo.getText();
 
-        var model = new salesModel();
+       // var model = new salesModel();
         try {
-            sales dto = model.searchSales(id);
+            salesDto dto = SalesBO.searchSales(id);
 
             if (dto != null){
                 fillFields(dto);
@@ -272,12 +283,12 @@ public class salesFormController {
                 new Alert(Alert.AlertType.INFORMATION, "sales not found").show();
             }
 
-        } catch (SQLException e){
+        } catch (SQLException | ClassNotFoundException e){
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 
-    private void fillFields(sales dto) {
+    private void fillFields(salesDto dto) {
         txtsalesNo.setText(dto.getSalesNo());
         txtdate.setText(String.valueOf(dto.getDate()));
     }
