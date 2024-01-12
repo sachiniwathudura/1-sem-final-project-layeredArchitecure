@@ -13,9 +13,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.cinnamonProduction.dto.employee;
-import lk.ijse.cinnamonProduction.model.cinnamonGradesModel;
-import lk.ijse.cinnamonProduction.model.employeeManagementModel;
+import lk.ijse.cinnamonProduction.bo.custom.Impl1.employeeManageBOImpl;
+import lk.ijse.cinnamonProduction.bo.custom.employeeManageBO;
+
+import lk.ijse.cinnamonProduction.dto.employeeManagementDTo;
+import lk.ijse.cinnamonProduction.entity.employee;
+
+
 
 
 import java.io.IOException;
@@ -51,7 +55,7 @@ public class employeeManagementFormController {
     private ImageView employeePane;
 
     @FXML
-    private TableView<employee> tableview;
+    private TableView<employeeManagementDTo> tableview;
 
     @FXML
     private TextField txtAddress;
@@ -65,6 +69,8 @@ public class employeeManagementFormController {
     @FXML
     private TextField txtTeleNo;
 
+     employeeManageBO EmployeeManageBO =    new employeeManageBOImpl();
+
     @FXML
     void btnAddOnAction(ActionEvent event) {
         boolean isValid = validateEmployee();
@@ -76,16 +82,16 @@ public class employeeManagementFormController {
             String empStatus = (String)txtStatus.getText();
 
 
-            var dto = new employee(empId, empName, empAddress, empTeleNo, empStatus);
+            var dto = new employeeManagementDTo(empId, empName, empAddress, empTeleNo, empStatus);
 
-            var model = new employeeManagementModel();
+        //    var model = new employeeManagementModel();
             try {
-                boolean isSaved = model.saveEmployee(dto);
+                boolean isSaved = EmployeeManageBO.saveEmployee(dto);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, "employee saved!").show();
                     //clearFields();
                 }
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             }
 
@@ -141,12 +147,12 @@ public class employeeManagementFormController {
         String empId = txtId.getText();
 
         try {
-            boolean isDeleted = employeeManagementModel.deleteEmployee(empId);
+            boolean isDeleted =EmployeeManageBO.deleteEmployee(empId);
 
             if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "employee deleted!").show();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
@@ -157,15 +163,15 @@ public class employeeManagementFormController {
         String empAddress = txtAddress.getText();
         String empTeleNo = txtTeleNo.getText();
         String empStatus = txtStatus.getAccessibleText();
-        var dto =new employee(empId,empName,empAddress,empTeleNo,empStatus);
-        var model=new employeeManagementModel();
+        var dto =new employeeManagementDTo(empId,empName,empAddress,empTeleNo,empStatus);
+       // var model=new employeeManagementModel();
 
         try {
-            boolean isUpdated = employeeManagementModel.updateEmployee(dto);
+            boolean isUpdated = EmployeeManageBO.updateEmployee(dto);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "upadte employee").show();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
 
@@ -184,16 +190,16 @@ public class employeeManagementFormController {
         colstatus.setCellValueFactory(new PropertyValueFactory<>("empStatus"));
     }
     private void loadAllEmployee() {
-        var model = new employeeManagementModel();
+      //  var model = new employeeManagementModel();
 
-        ObservableList<employee> obList  = FXCollections.observableArrayList();
+        ObservableList<employeeManagementDTo> obList  = FXCollections.observableArrayList();
 
             try {
-                 List<employee> dtoList = model.getAllEmployee();
+                 List<employeeManagementDTo> dtoList = EmployeeManageBO.getAllEmployee();
 
-                    for(employee dto : dtoList) {
+                    for(employeeManagementDTo dto : dtoList) {
                         obList.add(
-                                new employee(
+                                new employeeManagementDTo(
                                         dto.getEmpId(),
                                         dto.getEmpName(),
                                         dto.getEmpAddress(),
@@ -204,8 +210,8 @@ public class employeeManagementFormController {
                          );
                     }
 
-            tableview.setItems(obList);
-        } catch (SQLException e) {
+           tableview.setItems(obList);
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
@@ -217,15 +223,15 @@ public class employeeManagementFormController {
         String empAddress = txtAddress.getText();
         String empTeleNo = txtTeleNo.getText();
         String empStatus = txtStatus.getAccessibleText();
-        var dto =new employee(empId,empName,empAddress,empTeleNo,empStatus);
-        var model=new employeeManagementModel();
+        var dto =new employeeManagementDTo(empId,empName,empAddress,empTeleNo,empStatus);
+      //  var model=new employeeManagementModel();
 
         try {
-            boolean isUpdated = employeeManagementModel.updateEmployee(dto);
+            boolean isUpdated = EmployeeManageBO.updateEmployee(dto);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "upadte employee").show();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
@@ -234,12 +240,12 @@ public class employeeManagementFormController {
         String empId = txtId.getText();
 
         try {
-            boolean isDeleted = employeeManagementModel.deleteEmployee(empId);
+            boolean isDeleted = EmployeeManageBO.deleteEmployee(empId);
 
             if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "employee deleted!").show();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
 
         }
@@ -355,9 +361,9 @@ public class employeeManagementFormController {
     public void employeeOnAction(ActionEvent actionEvent) {
         String id = txtId.getText();
 
-        var model = new employeeManagementModel();
+      //  var model = new employeeManagementModel();
         try {
-            employee dto = model.searchEmployee(id);
+            employeeManagementDTo dto = EmployeeManageBO.searchEmployee(id);
 
             if (dto != null){
                 fillFields(dto);
@@ -365,12 +371,12 @@ public class employeeManagementFormController {
                 new Alert(Alert.AlertType.INFORMATION, "cGrade not found").show();
             }
 
-        } catch (SQLException e){
+        } catch (SQLException | ClassNotFoundException e){
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 
-    private void fillFields(employee dto) {
+    private void fillFields(employeeManagementDTo dto) {
         txtId.setText(dto.getEmpId());
         txtName.setText(dto.getEmpName());
         txtAddress.setText(dto.getEmpAddress());
