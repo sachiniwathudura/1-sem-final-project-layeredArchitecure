@@ -1,6 +1,6 @@
 package lk.ijse.cinnamonProduction.bo;
 
-import lk.ijse.cinnamonProduction.bo.custom.Impl1.cinnamonGradesBOImpl;
+import lk.ijse.cinnamonProduction.bo.custom.Impl1.*;
 import lk.ijse.cinnamonProduction.dao.SuperDAO;
 import lk.ijse.cinnamonProduction.dao.custom.Impl1.*;
 
@@ -18,26 +18,26 @@ public class BOFactory {
         public enum BOTypes{
             CINNAMONGRADES,COMPANY,EMPLOYEE,MACHINE,MERCHANT,SALES,STOCK,VEHICAL,USER
         }
-        public SuperDAO getBO( BOTypes botypes){
+        public SuperBO getBO( BOTypes botypes){
             switch (botypes){
                 case CINNAMONGRADES:
-                    return (SuperDAO) new cinnamonGradesBOImpl();
+                    return new cinnamonGradesBOImpl();
                 case COMPANY:
-                    return new companyModel();
+                    return new companyBOImpl();
                 case EMPLOYEE:
-                    return new employeeManagementModel();
+                    return new employeeManageBOImpl();
                 case MACHINE:
-                    return new machineModel();
+                    return new machineBOImpl();
                 case MERCHANT:
-                    return new registerMerchantModel();
+                    return new merchantBOImpl();
                 case SALES:
-                    return new salesModel();
+                    return new salesBOImpl();
                 case STOCK:
-                    return new stockModel();
+                    return new stockBOImpl();
                 case VEHICAL:
-                    return new  vehicalModel();
+                    return new  vehicalBOImpl();
                 case USER:
-                    return new userLoginModel();
+                    return new userLoginBOImpl();
                 default:
                     return null;
 
