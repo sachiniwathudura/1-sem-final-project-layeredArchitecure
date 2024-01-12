@@ -14,9 +14,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.cinnamonProduction.dto.company;
-import lk.ijse.cinnamonProduction.model.companyModel;
-import lk.ijse.cinnamonProduction.model.employeeManagementModel;
+import lk.ijse.cinnamonProduction.bo.custom.Impl1.companyBOImpl;
+import lk.ijse.cinnamonProduction.bo.custom.Impl1.employeeManageBOImpl;
+import lk.ijse.cinnamonProduction.bo.custom.companyBO;
+import lk.ijse.cinnamonProduction.bo.custom.employeeManageBO;
+import lk.ijse.cinnamonProduction.dao.custom.employeeDAO;
+
+import lk.ijse.cinnamonProduction.dto.companyDto;
 import lombok.SneakyThrows;
 
 import java.io.IOException;
@@ -37,7 +41,7 @@ public class DashboardFormController {
     private Label lblToatal;
 
     @FXML
-    private TableView<company> tablcompanydetails;
+    private TableView<companyDto> tablcompanydetails;
 
     @FXML
     private AnchorPane dashboardPane;
@@ -47,8 +51,10 @@ public class DashboardFormController {
     private PieChart pieChart;
 
 
-    private final employeeManagementModel EmployeeManagementModel = new employeeManagementModel();
-    private final companyModel CompanyModel = new companyModel();
+    /*private final employeeManagementModel EmployeeManagementModel = new employeeManagementModel();
+    private final companyModel CompanyModel = new companyModel();*/
+    companyBO companyBO=new companyBOImpl();
+    employeeManageBO employeeManageBO=new employeeManageBOImpl();
 
     @SneakyThrows
     public void initialize() throws SQLException {
@@ -146,16 +152,16 @@ public class DashboardFormController {
     }
 
     private void viewCompanyTable() {
-        var model = new companyModel();
+       // var model = new companyModel();
 
-        ObservableList<company> obList  = FXCollections.observableArrayList();
+        ObservableList<companyDto> obList  = FXCollections.observableArrayList();
 
         try {
-            List<company> dtoList = model.getAllCompany();
+            List<companyDto> dtoList = companyBO.getAllCompany();
 
-            for(company dto : dtoList) {
+            for(companyDto dto : dtoList) {
                 obList.add(
-                        new company(
+                        new companyDto(
                                 dto.getCompanyId(),
                                 dto.getCompanyName(),
                                 dto.getCompanyEmail()
@@ -164,13 +170,13 @@ public class DashboardFormController {
                 );
             }
            tablcompanydetails.setItems(obList);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
     private void countEmployeeFrame() throws SQLException {
-        String count= String.valueOf(EmployeeManagementModel.countEmployee());
+        String count= String.valueOf(employeeDAO.countEmployee());
         this.lblToatal.setText(count);
 
 
