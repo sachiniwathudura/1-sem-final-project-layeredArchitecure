@@ -3,6 +3,7 @@ package lk.ijse.cinnamonProduction.dao;
 import lk.ijse.cinnamonProduction.dao.custom.Impl1.*;
 
 public class DAOFactory {
+
     private static DAOFactory daoFactory;
     private DAOFactory(){
     }
@@ -12,26 +13,28 @@ public class DAOFactory {
     }
 
     public enum DAOTypes{
-        CINNAMONGRADES,COMPANY,EMPLOYEE,MACHINE,MERCHANT,SALES,STOCK,VEHICAL
+        CINNAMONGRADES,COMPANY,EMPLOYEE,MACHINE,MERCHANT,SALES,STOCK,VEHICAL,USER
     }
     public SuperDAO getDAO(DAOTypes daoTypes){
         switch (daoTypes){
             case CINNAMONGRADES:
-                return new cinnamonGradesModel();
+                return new cinnamonGradesDAOImpl();
             case COMPANY:
-                return  new companyModel();
+                return  new companyDAOImpl();
             case EMPLOYEE:
-                return new employeeManagementModel();
+                return new employeeManagementDAOImpl();
             case MACHINE:
-                return new machineModel();
+                return new machineDAOImpl();
             case MERCHANT:
-                return new registerMerchantModel();
+                return new registerMerchantDAOImpl();
             case SALES:
-                return new salesModel();
+                return new salesDAOImpl();
             case STOCK:
-                return new stockModel();
+                return new stockDAOImpl();
             case VEHICAL:
-                return new  vehicalModel();
+                return new vehicalDAOImpl();
+            case USER:
+                return new userLoginDAOImpl();
             default:
                 return null;
 
