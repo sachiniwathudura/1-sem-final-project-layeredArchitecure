@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="cinnamonProduction" />
+        <module name="1-sem-final-project" />
       </profile>
     </annotationProcessing>
   </component>
