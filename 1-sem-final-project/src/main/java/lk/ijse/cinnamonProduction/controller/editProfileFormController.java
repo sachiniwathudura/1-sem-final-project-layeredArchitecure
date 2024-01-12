@@ -10,8 +10,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.cinnamonProduction.dto.userLogin;
-import lk.ijse.cinnamonProduction.model.userLoginModel;
+import lk.ijse.cinnamonProduction.bo.custom.Impl1.userLoginBOImpl;
+import lk.ijse.cinnamonProduction.bo.custom.userLoginBO;
+
+import lk.ijse.cinnamonProduction.dto.userLoginDto;
+import lk.ijse.cinnamonProduction.entity.userLogin;
+
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -38,7 +42,7 @@ public class editProfileFormController {
 
     @FXML
     private TextField txtid;
-
+   userLoginBO UserLoginBO=new userLoginBOImpl();
     @FXML
     void btnOnSaveAction(ActionEvent event) throws SQLException {
         boolean isValid = validateUserDetalis();
@@ -50,14 +54,14 @@ public class editProfileFormController {
             String userEmail = txtemail.getText();
             String password = txtppassword.getText();
 
-            var userLoginDto = new userLogin(userId, userName, userEmail, password);
+            var userLoginDto = new userLoginDto(userId, userName, userEmail, password);
 
             try {
-                boolean isSaved = userLoginModel.saveUser(userLoginDto);
+                boolean isSaved = UserLoginBO.saveUser(userLoginDto);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, " user saved").show();
                 }
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             }
         } else {
@@ -72,12 +76,12 @@ public class editProfileFormController {
         String userId = txtid.getText();
 
         try {
-            boolean isDeleted = userLoginModel.deleteUser(userId);
+            boolean isDeleted = UserLoginBO.deleteUser(userId);
 
             if(isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "user deleted!").show();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
@@ -85,10 +89,10 @@ public class editProfileFormController {
 
     private void deleteUser(String userId) {
         try {
-            boolean isDeleted = userLoginModel.deleteUser(userId);
+            boolean isDeleted =UserLoginBO.deleteUser(userId);
             if(isDeleted)
                 new Alert(Alert.AlertType.CONFIRMATION, "user deleted!").show();
-        } catch (SQLException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             new Alert(Alert.AlertType.ERROR, ex.getMessage()).show();
         }
     }
@@ -112,8 +116,13 @@ public class editProfileFormController {
             String userEmail = txtemail.getText();
             String password = txtppassword.getText();
 
-            boolean isUpdated = userLoginModel.updateUser(new userLogin(userId,userName,userEmail,password));
-            if (isUpdated) {
+        boolean isUpdated = false;
+        try {
+            isUpdated = UserLoginBO.updateUser(new userLoginDto(userId,userName,userEmail,password));
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "user updated").show();
             }
 
