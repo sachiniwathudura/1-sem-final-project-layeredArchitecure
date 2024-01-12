@@ -1,21 +1,20 @@
 package lk.ijse.cinnamonProduction.dao.custom.Impl1;
 
+import lk.ijse.cinnamonProduction.dao.SQLUtil;
 import lk.ijse.cinnamonProduction.dao.custom.salesDAO;
-import lk.ijse.cinnamonProduction.db.DbConnection;
+import lk.ijse.cinnamonProduction.dto.cinnamonGradesDto;
+import lk.ijse.cinnamonProduction.entity.cinnamonGrades;
 import lk.ijse.cinnamonProduction.entity.sales;
-import lk.ijse.cinnamonProduction.viewTDM.salesTm;
 //import lk.ijse.cinnamonProduction.dto.sales;
 //import lk.ijse.cinnamonProduction.dto.tm.salesTm;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class salesModel implements salesDAO {
-    public static boolean saveSales(sales salesDto) throws SQLException {
+public class salesDAOImpl implements salesDAO {
+   /* public static boolean saveSales(sales salesDto) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
         String sql = "INSERT INTO sales VALUES(?, ?)";
         PreparedStatement pstm = connection.prepareStatement(sql);
@@ -84,5 +83,65 @@ public class salesModel implements salesDAO {
             dto = new sales(salesNo,date);
         }
         return dto;
+    }*/
+
+    @Override
+    public List<sales> getAll() throws SQLException, ClassNotFoundException {
+
+        List<sales> dtoList = new ArrayList<>();
+
+        ResultSet resultSet = SQLUtil.execute("SELECT * FROM sales");
+
+        while (resultSet.next()) {
+            String date = resultSet.getString(1);
+            String salesNo= resultSet.getString(2);
+
+            var entity = new sales(date,salesNo);
+            dtoList.add(entity);
+        }
+        return dtoList;
+    }
+
+    @Override
+    public boolean save(sales entity) throws SQLException, ClassNotFoundException {
+        return SQLUtil.execute("INSERT INTO sales VALUES(?, ?)",entity.getSalesNo(),entity.getDate());
+    }
+
+    @Override
+    public boolean update(sales entity) throws SQLException, ClassNotFoundException {
+        return SQLUtil.execute("UPDATE sales SET date = ?WHERE salesNo = ?",entity.getDate(),entity.getSalesNo());
+    }
+
+    @Override
+    public boolean exist(String id) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String id) throws SQLException, ClassNotFoundException {
+
+        return false;
+    }
+
+    @Override
+    public String generateID() throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public sales search(String id) throws SQLException, ClassNotFoundException {
+
+        ResultSet resultSet = SQLUtil.execute("SELECT * FROM machineDetails WHERE machineId = ?",id);
+
+        sales entity = null;
+        if(resultSet.next()){
+
+            String salesNo= resultSet.getString(1);
+            String date = resultSet.getString(2);
+
+
+            entity = new sales(salesNo,date);
+        }
+        return entity;
     }
 }
