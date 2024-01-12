@@ -15,10 +15,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.cinnamonProduction.dto.machine;
-import lk.ijse.cinnamonProduction.dto.tm.machineTm;
-import lk.ijse.cinnamonProduction.model.employeeManagementModel;
-import lk.ijse.cinnamonProduction.model.machineModel;
+import lk.ijse.cinnamonProduction.bo.custom.Impl1.machineBOImpl;
+import lk.ijse.cinnamonProduction.bo.custom.machineBO;
+
+import lk.ijse.cinnamonProduction.dto.machineDto;
+
+import lk.ijse.cinnamonProduction.entity.machine;
+
+
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -50,7 +54,9 @@ public class machineFormController {
 
 
         @FXML
-        private TableView<machine> tableMachine;
+        private TableView<machineDto> tableMachine;
+
+        machineBO MachineBO = new machineBOImpl();
 
         @FXML
         void btnAddOnAction(ActionEvent event) {
@@ -60,16 +66,16 @@ public class machineFormController {
                         String machineName = txtName.getText();
                         String machineStatus = txtStatus.getText();
 
-                        var dto = new machine(machineId, machineName, machineStatus);
+                        var dto = new machineDto(machineId, machineName, machineStatus);
 
-                        var model = new machineModel();
+                  //      var model = new machineModel();
                         try {
-                                boolean isSaved = model.savemachine(dto);
+                                boolean isSaved = MachineBO.saveMachine(dto);
                                 if (isSaved) {
                                         new Alert(Alert.AlertType.CONFIRMATION, "machine saved!").show();
                                         clearFields();
                                 }
-                        } catch (SQLException e) {
+                        } catch (SQLException | ClassNotFoundException e) {
                                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
                         }
                 }else{
@@ -107,12 +113,12 @@ public class machineFormController {
                 String machineId = txtId.getText();
 
                 try {
-                        boolean isDeleted = machineModel.deleteMachine(machineId);
+                        boolean isDeleted = MachineBO.deleteMachine(machineId);
 
                         if (isDeleted) {
                                 new Alert(Alert.AlertType.CONFIRMATION, "machine deleted!").show();
                         }
-                } catch (SQLException e) {
+                } catch (SQLException | ClassNotFoundException e) {
                         new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
                 }
 
@@ -126,11 +132,11 @@ public class machineFormController {
 
 
                 try {
-                        boolean isUpdated = machineModel.updateMachine(new machineTm(machineId, machineName, machineStatus));
+                        boolean isUpdated =MachineBO.updateMachine(new machineDto(machineId, machineName, machineStatus));
                         if (isUpdated) {
                                 new Alert(Alert.AlertType.CONFIRMATION, "upadte machine").show();
                         }
-                } catch (SQLException e) {
+                } catch (SQLException | ClassNotFoundException e) {
                         new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
                 }
         }
@@ -152,15 +158,15 @@ public class machineFormController {
         }
 
         private void loadAllMachine() {
-                var model = new machineModel();
+            //    var model = new machineModel();
 
-                ObservableList<machine>oblist = FXCollections.observableArrayList();
+                ObservableList<machineDto>oblist = FXCollections.observableArrayList();
 
                 try {
-                        List<machine> dtoList = model.getAllMachine();
-                        for (machine dto : dtoList) {
+                        List<machineDto> dtoList = MachineBO.getAllMachine();
+                        for (machineDto dto : dtoList) {
                                 oblist.add(
-                                        new machine(
+                                        new machineDto(
                                                 dto.getMachineId(),
                                                 dto.getMachineName(),
                                                 dto.getMachineStatus()
@@ -168,7 +174,7 @@ public class machineFormController {
                                 );
                         }
                         tableMachine.setItems(oblist);
-                }catch (SQLException e) {
+                }catch (SQLException | ClassNotFoundException e) {
                         throw new RuntimeException(e);
                 }
         }
@@ -277,9 +283,9 @@ public class machineFormController {
         public void MachineOnAction(ActionEvent actionEvent) {
                 String id = txtId.getText();
 
-                var model = new machineModel();
+             //   var model = new machineModel();
                 try {
-                        machine dto = model.searchMachine(id);
+                        machineDto dto =MachineBO.searchMachine(id);
 
                         if (dto != null){
                                 fillFields(dto);
@@ -287,12 +293,12 @@ public class machineFormController {
                                 new Alert(Alert.AlertType.INFORMATION, "machine not found").show();
                         }
 
-                } catch (SQLException e){
+                } catch (SQLException | ClassNotFoundException e){
                         new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
                 }
         }
 
-        private void fillFields(machine dto) {
+        private void fillFields(machineDto dto) {
                 txtId.setText(dto.getMachineId());
                 txtName.setText(dto.getMachineName());
                 txtStatus.setText(dto.getMachineStatus());
